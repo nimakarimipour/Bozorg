@@ -1,3 +1,5 @@
+package main;
+
 public num Point {
   HEALTH {
   },
