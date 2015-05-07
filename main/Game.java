@@ -6,7 +6,7 @@ import bozorg.common.exceptions.BozorgExceptionBase;
 import bozorg.judge.JudgeAbstract;
 import map.Map;
 import person.Player;
-
+import utility.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,13 +18,11 @@ public class Game extends JudgeAbstract {
     private int mapHeight;
     Map map;
 
-
-
-
+    private Time time;
 
     public ArrayList<GameObjectID> loadMap(int[][] cellsType, int[][] wallsType, int[] players){
 
-        map = new Map(cellsType, wallsType, players);
+        map = new Map(cellsType, wallsType);
         mapWidth = cellsType[0].length;
         mapHeight = cellsType.length;
         return createGameObjectId(players, new ArrayList<GameObjectID>());
@@ -67,25 +65,25 @@ public class Game extends JudgeAbstract {
     }
 
     public int getMapCellType(int col, int row){
-       return map.getCellOfBlock(col, row);
+       return map.getType(col, row);
     }
 
     public int getMapCellType(int col, int row, GameObjectID player){
         Player realPlayer = playerHashMap.get(player);
         if(realPlayer.blockIsVisible(row, col)){
-            return map.getCellOfBlock(row, col);
+            return map.getType(col, row);
         }
         else return DARK_CELL;
     }
 
     public int getMapWallType(int col, int row){
-        return map.getTypeOfBlock(col, row);
+        return map.getWallType(col, row);
     }
 
     public int getMapWallType(int col, int row ,GameObjectID player){
         Player realPlayer = playerHashMap.get(player);
         if(realPlayer.blockIsVisible(row, col)){
-            return map.getTypeOfBlock(row, col);
+            return map.getType(row, col);
         }
         else return DARK_CELL;
     }
@@ -168,11 +166,20 @@ public class Game extends JudgeAbstract {
     }
 
     public  void startTimer(){
-
+    	time = new Time(50);
+    	
+    	//implementing Runnable
+    	Runnable runn = new Runnable(){
+    		public void run(){
+    			next50milis();
+    		}
+    	};
+    	
+    	time.goTimer(runn);
     }// will never be used in judge
 
     public  void pauseTimer(){
-
+    	time.pause();
     }
 
     public float getTime(){

@@ -51,6 +51,9 @@ public class Player {
     public ArrayList<Player> getPlayersInVision(){
         return null;
     }
+    public boolean blockIsVisible(int col, int row){
+    	return false;
+    }
 }
 
 

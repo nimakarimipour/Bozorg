@@ -1,7 +1,0 @@
-package map;
-
-/**
- * Created by nima on 5/6/15.
- */
-public enum Point {
-}

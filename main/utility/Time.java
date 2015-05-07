@@ -46,7 +46,7 @@ public class Time {
 	/**
 	 * Stops the timer
 	 */
-	void pause (){
+	public void pause (){
 		timer.cancel();
 	}
 }
